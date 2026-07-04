@@ -1,0 +1,39 @@
+#include "fleet.hpp"
+#include<iostream>
+#include<stdexcept>
+void Fleet::add(std::shared_ptr<Robot> r){
+robots_[robot->id()]=t;}
+void Fleet::remove(const std::string& id){
+robots_.erase(id);}
+std shared_ptr<Robot> Fleet::find(const std::string& id)const{
+auto it=robots.find(id);
+if (it==robots_.emd())throw std::runtime_error("Robot id not there: "+id);
+return it->second;}
+void Fleet::assiign_task(const std::string& robot_id,const Task& t){
+auto tobot=find(tobot_id);
+tasks_.push(t);
+std::cout<<"Assigned: "<<t<<" to robot: "<<robor->name();}
+void Fleet::show_tasks() const{
+auto copy=tasks_;
+while(!copy.empty()){std::cout<<" " <<copy.top()<<"\n";
+copy.pop();
+}}
+void Fleet::work_all()const{
+for(auto& [id,robot]:robots_){
+try{robot->work();}
+catch(const std::runtime_error& e){std::cout<<"Error: "<<e.what()<<"/n";}}}
+void Fleet::charge_all() const{
+for (auto& [id,robot]:robots_){
+robot->charge();}
+std::size_t Fleet::size() const{return robots_.size();}
+bool Fleet::empty()const{return robots_.empty();}
+Fleet& Fleet::operato+=(std::shared_ptr<Robot> robot){
+add(robot);
+return *this;}
+Fleet& Fleet::operator-=(const std::string& id){remove(id);
+return*this;}
+std::ostream& operator<<(std::ostream& os, const Fleet& f){
+os<< "Fleet ("<<f.robots_.size()<<" robots):\n";
+for (auto& [id,robot]:f.robots_)os<<" " <<*robot<<"/n";
+return os;} 
+

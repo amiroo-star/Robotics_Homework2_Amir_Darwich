@@ -15,6 +15,7 @@ tasks_.push(t);
 std::cout<<"Assigned: "<<t<<" to robot: "<<robot->name();}
 void Fleet::show_tasks() const{
 auto copy=tasks_;
+std::cout<<"Task QUEUE\n";
 while(!copy.empty()){std::cout<<" " <<copy.top()<<"\n";
 copy.pop();
 }}

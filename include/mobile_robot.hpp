@@ -2,7 +2,7 @@
 #include  "robot.hpp"
 #include<thread>
 #include<atomic>
-class MobbileRobot: public Robot{
+class MobileRobot: public Robot{
 public:
 MobileRobot(const std::string& id, const std::string& name,int battery,double speed);
 void work() override;

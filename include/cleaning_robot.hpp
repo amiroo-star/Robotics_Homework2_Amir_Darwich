@@ -1,6 +1,6 @@
 #pragma once
-#include "mobile_robots.hpp"
-class CleaningRobot : public MobileRoobot{
+#include "mobile_robot.hpp"
+class CleaningRobot : public MobileRobot{
 public:
 CleaningRobot(const std::string& id, const std::string& name,int battery,double speed,int brush_level);
 void work() override;

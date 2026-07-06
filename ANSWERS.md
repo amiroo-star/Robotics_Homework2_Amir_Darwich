@@ -1,14 +1,23 @@
-1-Using unique_ptr means having only one pointer to an object without being able to generate any copies or new pointer to it, so not using a shared_ptr means .find() funstion will not work and return an error when trying to give a pointer pointing to the object.
-2- Since we are looking for fast lookup by ID, I chose to use unordered_maps which has an averag of O(1) runtime on lookup, add,remove,find and assigning_task given the ID). 
-3- since we have priority with the highest priority int being most important we should use max_heap which is the same as priority queue. Operations take like binary trees 0(log(n)and getting the highest priority is O(1) which is the most recurrent and important function we are aiming to use.
-4- We used friend on the function since this operator<< takes as a left side the ostream not the Robot soo this funciton is from outside the class so it cannot access private parameters until presented as friend
-5-the find_if inside the lambda is designed for looping and finding an element with start and end pointers to the scope of search, given a condition. While for the function, we need to define the place to search array vector... or whatever and then we need to have an iterator with the bounds of the loop and then search and check for the condition.
-6- I will explain this using an example from the sensor world: some sensors are only designed for binary desicions: whether an object is detected or not. So the output iis either low voltage 0V or high voltage(e.g 5 V); if the ciscuit is broken we will get 0 V and won't be able to distinguish between undetected object and a brooken circuit. The same aaplies with false and the exception which detects the battery is less than 0 and so we cannot make it work anymore and we need to charge it instead of taking it as a normal false.
-7- Yes, I placed the exception at the first time so the exception is not ignored or postponed to later which might cause missing the error(not possible in my case).
-8- In order to avoid racing I defined atomic as an atomic<bool> which is checked inside the threadsand set wich prevents any other thread (containing it to work) until out of scope (no need for mutex since we have one variable). For the worker_ to continue it is joined after launuching so start_work blocks uncil dine. We cannot detach since we need to keep track pf the thread and not let it live outside(on its own)
-9- given that inheritance in this case creates copies(not knowing it should go to the already predefined mother classe instructors) of the robot the mainteananceRobot will have two copies of the robot making the private name_ nt accessible . The keyword is virtual we need to introduce virtual inheritace:
+1- Using unique_ptr means having only one pointer to an object without being able to generate any copies or new pointers to it, so not using a shared_ptr means .find() function will not work and return an error when trying to give a pointer pointing to the object.
+
+2- Since we are looking for fast lookup by ID, I chose to use unordered_maps which has an average of O(1) runtime on lookup, add, remove, find, and assigning_task given the ID.
+
+3- Since we have priority with the highest priority int being most important, we should use max_heap which is the same as a priority queue. Operations take, like binary trees, O(log(n)), and getting the highest priority is O(1), which is the most recurrent and important function we are aiming to use.
+
+4- We used friend on the function since this operator<< takes as a left side the ostream, not the Robot, so this function is from outside the class, so it cannot access private parameters until presented as friend.
+
+5- The find_if inside the lambda is designed for looping and finding an element with start and end pointers to the scope of the search, given a condition. While for the function, we need to define the place to search (array, vector... or whatever), and then we need to have an iterator with the bounds of the loop and then search and check for the condition.
+
+6- I will explain this using an example from the sensor world: some sensors are only designed for binary decisions: whether an object is detected or not. So the output is either low voltage (0 V) or high voltage (e.g. 5 V); if the circuit is broken we will get 0 V and won't be able to distinguish between an undetected object and a broken circuit. The same applies with false and the exception which detects the battery is less than 0 and so we cannot make it work anymore and we need to charge it instead of taking it as a normal false.
+
+7- Yes, I placed the exception at the first time so the exception is not ignored or postponed to later, which might cause missing the error (not possible in my case).
+
+8- In order to avoid racing I defined atomic as an atomic<bool> which is checked inside the threads and set, which prevents any other thread (containing it) from working until out of scope (no need for a mutex since we have one variable). For the worker_ to continue, it is joined after launching, so start_work blocks until done. We cannot detach since we need to keep track of the thread and not let it live outside (on its own).
+
+9- Given that inheritance in this case creates copies (not knowing it should go to the already predefined mother class constructors) of the robot, the MaintenanceRobot will have two copies of the Robot, making the private name_ not accessible. The keyword is virtual; we need to introduce virtual inheritance:
+
 class MobileRobot  : public virtual Robot {};
 class CookingRobot : public virtual Robot {};
 class MaintenanceRobot : public MobileRobot, public CookingRobot {};
-this way the same robot is shared without creating any copies of it .(it calls back the mother classs)
 
+This way the same Robot is shared without creating any copies of it (it calls back the mother class).
